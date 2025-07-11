@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import { PrismaClient } from '@prisma/client';
-import { PrismaClient } from '@prisma/client/extension';
+import { PrismaClient } from '@/app/generated/prisma';
 
 let prisma: PrismaClient;
 

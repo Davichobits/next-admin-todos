@@ -37,4 +37,5 @@ npx prisma generate
 
 Rename the .env.example file to .env and set the environment variables accordingly. 
 
-```bash
+## Seeding the Database
+[To seed the database](localhost:3000/api/seed), you can run the following command:
