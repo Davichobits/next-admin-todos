@@ -1,29 +1,31 @@
 'use client';
 
 import { IoTrashOutline } from 'react-icons/io5';
-import { createTodo } from '../helpers/todos';
+// import { createTodo } from '../helpers/todos';
+import { addTodo, deleteCompleted } from '../actions/todos-actions';
 import { FormEvent, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import * as todosApi from '@/todos/helpers/todos'
+// import { useRouter } from 'next/navigation';
+// import * as todosApi from '@/todos/helpers/todos'
 
 export const NewTodo = () => { 
 
   const [description, setDescription] = useState('')
 
-  const router = useRouter();
+  // const router = useRouter();
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if(description.trim().length === 0) return;
-    await createTodo(description);
-    router.refresh();
+    // await createTodo(description);
+    // router.refresh();
+    await addTodo(description);
+    setDescription('');
   }
 
-  const deleteCompleted = async () =>{
-    await todosApi.deleteCompleteTodos();
-    router.refresh();
-    
-  }
+  // const ondeleteCompleted = async () =>{
+  //   await todosApi.deleteCompleteTodos();
+  //   router.refresh();
+  // }
 
   return (
     <form onSubmit={onSubmit} className='flex gap-2'>
