@@ -33,7 +33,7 @@ const putSchema = yup.object({
 export async function PUT(request: Request, args: Args) { 
 
   const {params} = args;
-  const {id} = params;
+  const {id} = await params;
 
   const todo = await prisma.todo.findFirst({
     where: { id: id }
