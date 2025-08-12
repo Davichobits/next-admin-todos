@@ -28,27 +28,27 @@ export async function GET(request: Request){
 
 const objectSquema = yup.object({
   description: yup.string().required(),
-  complete: yup.boolean().required()
+  complete: yup.boolean()
 })
 
 export async function POST(request: Request){
 
   try {
-    
     const body = await request.json();
     const validatedBody = await objectSquema.validate(body)
-  
+    
     const todo = await prisma.todo.create({data: validatedBody});
-  
+    
     return NextResponse.json(todo);
   } catch (error) {
     if(error instanceof yup.ValidationError){
       return NextResponse.json({message: error.errors}, {status: 400})
     }
+    
     // if(error instanceof Prisma.PrismaClientValidationError ){
     //   return NextResponse.json({message: error.message})
     // }
-    // console.log(error);
+    
     return NextResponse.json({message: error})
   }
 

@@ -1,7 +1,9 @@
 // 'use client';
 // import { useEffect } from 'react';
+import { NewTodo } from '@/todos/components/new-todo';
 
 import prisma from '@/lib/prisma';
+import { TodosGrid } from '@/todos/components';
 
 export const metadata = {
   title: 'Listado de todos',
@@ -23,11 +25,9 @@ export default async function RestTodosPage() {
   // },[])
 
   return (
-    <div>
-      <h1>Rest Todos Page</h1>
-      {
-        todos.map(todo => <p key={todo.id}>{todo.description}</p>)
-      }
+    <div className='flex flex-col items-start gap-6'>
+      <NewTodo />
+      <TodosGrid todos={todos} />
     </div>
   );
 }
