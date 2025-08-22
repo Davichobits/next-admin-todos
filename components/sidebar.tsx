@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { CiLogout } from 'react-icons/ci';
 import { SidebarItem } from './sidebar-item';
-import { IoCalendarOutline, IoCheckboxOutline, IoListOutline } from 'react-icons/io5';
+import { IoCalendarOutline, IoCheckboxOutline, IoListOutline, IoCafe, IoCartOutline } from 'react-icons/io5';
 
 interface MenuItem {
   icon: React.ReactNode;
@@ -27,6 +27,16 @@ const menuItems: MenuItem[] = [
     icon: <IoListOutline size={30} />,
     title: 'Server Actions',
     path: '/dashboard/server-todos'
+  },
+  {
+    icon: <IoCafe size={30} />,
+    title: 'Cookies',
+    path: '/dashboard/cookies'
+  },
+  {
+    icon: <IoCartOutline size={30} />,
+    title: 'Productos',
+    path: '/dashboard/products'
   },
 ]
 

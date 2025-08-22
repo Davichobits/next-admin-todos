@@ -1,7 +1,19 @@
 import React from 'react';
-import { CiBellOn, CiChat1, CiMenuBurger, CiSearch } from 'react-icons/ci';
+import { CiChat1, CiMenuBurger, CiSearch, CiShoppingCart } from 'react-icons/ci';
+import { cookies } from 'next/headers';
+import Link from 'next/link';
 
-export const Topmenu = () => {
+interface Cookies {
+  [id: string]: number
+}
+
+export const Topmenu = async () => {
+
+  const cookiesStore = await cookies();
+  const cart = JSON.parse(cookiesStore.get('cart')?.value ?? '{}') as Cookies;
+
+  const numberOfItems = Object.values(cart).reduce((sum:number, acc:number) => sum + acc, 0)
+
   return (
     <div className='sticky z-10 top-0 h-16 border-b bg-white lg:py-2.5'>
       <div className='px-6 flex items-center justify-between space-x-4'>
@@ -33,9 +45,10 @@ export const Topmenu = () => {
           <button className='flex items-center justify-center w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200'>
             <CiChat1 className='text-black' size={25} />
           </button>
-          <button className='flex items-center justify-center w-10 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200'>
-            <CiBellOn className='text-black' size={25} />
-          </button>
+          <Link href='/dashboard/cart' className='flex items-center justify-center p-2 h-10 rounded-xl border bg-gray-100 focus:bg-gray-100 active:bg-gray-200'>
+            <span className='font-bold text-black/60 mr-2'>{numberOfItems}</span>
+            <CiShoppingCart className='text-black' size={25} />
+          </Link>
         </div>
       </div>
     </div>

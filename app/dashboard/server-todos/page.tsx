@@ -1,7 +1,9 @@
-import { NewTodo } from '@/todos/components/new-todo';
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 
 import prisma from '@/lib/prisma';
-import { TodosGrid } from '@/todos/components';
+import { TodosGrid, NewTodo } from '@/todos/components';
 
 export const metadata = {
   title: 'Listado de todos',

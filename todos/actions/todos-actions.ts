@@ -5,7 +5,16 @@ import { Todo } from '@/app/generated/prisma';
 import prisma from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 
+const sleep = async (time: number = 0) => {
+  return new Promise((resolve)=>{
+    setTimeout(()=>{
+      resolve(true);
+    }, time*1000)
+  })
+}
+
 export const toggleTodo = async (id: string, complete: boolean): Promise<Todo> => {
+  sleep(1);
   const todo = await prisma.todo.findFirst({where: {id}});
   if(!todo){
     throw `Todo con id ${id} no encontrado`;
