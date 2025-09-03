@@ -16,7 +16,7 @@ export default function DashboardLayout(
         <Topmenu />
 
         {/* TODO: Contenido en el Layout.tsx */}
-        <div className="px-6 pt-6">
+        <div className="px-6 pt-6 text-gray-600">
           {children}
         </div>
       </div>

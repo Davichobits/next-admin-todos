@@ -2,9 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { CiLogout } from 'react-icons/ci';
 import { SidebarItem } from './sidebar-item';
-import { IoCalendarOutline, IoCheckboxOutline, IoListOutline } from 'react-icons/io5';
+import { IoCalendarOutline, IoCheckboxOutline, IoListOutline, IoCafe, IoCartOutline, IoPersonOutline } from 'react-icons/io5';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
+import { LogOutButton } from '../../components';
 
 interface MenuItem {
   icon: React.ReactNode;
@@ -28,12 +31,33 @@ const menuItems: MenuItem[] = [
     title: 'Server Actions',
     path: '/dashboard/server-todos'
   },
+  {
+    icon: <IoCafe size={30} />,
+    title: 'Cookies',
+    path: '/dashboard/cookies'
+  },
+  {
+    icon: <IoCartOutline size={30} />,
+    title: 'Productos',
+    path: '/dashboard/products'
+  },
+  {
+    icon: <IoPersonOutline size={30} />,
+    title: 'Perfil',
+    path: '/dashboard/profile'
+  },
 ]
 
 
-export const Sidebar = () => {
+export const Sidebar = async () => {
 
-  
+  const session = await getServerSession(authOptions);
+
+  if(!session){
+    redirect('api/auth/signin');
+  }
+
+  const {name, email, image} = session.user ?? {};
 
   return (
     <aside className='ml-[-100%] fixed z-10 top-0 pb-3 px-6 w-full flex flex-col justify-between h-screen border-r bg-white transition duration-300 md:w-4/12 lg:ml-0 lg:w-[25%] xl:w-[20%] 2xl:w-[15%]'>
@@ -46,16 +70,17 @@ export const Sidebar = () => {
 
         <div className='mt-8 text-center'>
           <Image
-            width={40}
-            height={40}
-            src='https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=580&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-            alt=''
+            width={100}
+            height={100}
+            src={image ?? ''}
+            alt={`${name} profile picture`}
             className='m-auto rounded-full object-cover lg:w-28 lg:h-28'
           />
 
           <h5 className='hidden mt-4 text-xl font-semibold text-gray-600 lg:block'>
-            Cynthia J. Watts
+            {name}
           </h5>
+          <span className='hidden text-gray-400 lg:block'>{email}</span>
           <span className='hidden text-gray-400 lg:block'>Admin</span>
         </div>
 
@@ -67,10 +92,7 @@ export const Sidebar = () => {
       </div>
 
       <div className='px-6 -mx-6 pt-4 flex justify-between items-center border-t'>
-        <button className='px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group'>
-          <CiLogout />
-          <span className='group-hover:text-gray-700'>Logout</span>
-        </button>
+        <LogOutButton />
       </div>
     </aside>
   );
